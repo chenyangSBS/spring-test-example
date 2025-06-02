@@ -1,8 +1,8 @@
-package com.example.springtestexample.controller;
+package edu.sbs.cs.controller;
 
-import com.example.springtestexample.entity.Book;
-import com.example.springtestexample.repository.BookRepository;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.sbs.cs.entity.Book;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class BookControllerIntegrationTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private BookRepository bookRepository;
+    private edu.sbs.cs.repository.BookRepository bookRepository;
 
     @Autowired
     private ObjectMapper objectMapper;

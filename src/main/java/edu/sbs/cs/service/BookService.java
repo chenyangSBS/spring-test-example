@@ -1,12 +1,15 @@
-package com.example.springtestexample.service;
+package edu.sbs.cs.service;
 
-import com.example.springtestexample.entity.Book;
-import com.example.springtestexample.exception.BookNotFoundException;
-import com.example.springtestexample.repository.BookRepository;
+
+import edu.sbs.cs.entity.Book;
+import edu.sbs.cs.exception.BookNotFoundException;
+import edu.sbs.cs.model.PublisherTree;
+import edu.sbs.cs.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -43,5 +46,30 @@ public class BookService {
             throw new BookNotFoundException("未找到ID为 " + id + " 的图书");
         }
         bookRepository.deleteById(id);
+    }
+
+    public List<String> getAllAuthors() {
+        return bookRepository.findDistinctAuthors();
+    }
+
+    public List<PublisherTree> getPublisherAuthorTree() {
+        List<PublisherTree> tree = new ArrayList<>();
+
+        // 获取所有出版商
+        List<String> publishers = bookRepository.findAllPublishers();
+
+        // 为每个出版商查找对应的作者
+        for (String publisher : publishers) {
+            List<String> authors = bookRepository.findAuthorsByPublisher(publisher);
+            PublisherTree node = new PublisherTree(publisher);
+            node.setAuthors(authors);
+            tree.add(node);
+        }
+
+        return tree;
+    }
+
+    public List<Book> getBooksByAuthor(String author) {
+        return bookRepository.findBooksByAuthor(author);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.springtestexample.entity;
+package edu.sbs.cs.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,6 +21,8 @@ public class Book {
 
     @NotBlank(message = "作者不能为空")
     private String author;
+
+    private String publisher;
 
     @NotNull(message = "价格不能为空")
     @Positive(message = "价格必须大于0")
